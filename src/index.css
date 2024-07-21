@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .auth-bg {
+    @apply bg-[url('../public/recipe-book')] bg-cover bg-no-repeat bg-center;
+  }
+
+  .auth-container {
+    @apply grid grid-cols-1 lg:grid-cols-2 min-h-screen w-full;
+  }
+
+  .auth-left {
+    @apply auth-bg hidden lg:block;
+  }
+
+  .auth-right {
+    @apply auth-bg bg-left  lg:bg-none grid place-items-center;
+  }
+}
