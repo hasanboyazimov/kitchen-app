@@ -1,27 +1,28 @@
-//firebase
 import { db } from "../firebase/firebaseConfig";
-import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
-
-//react imports
 import { useEffect, useState } from "react";
+import {
+  collection,
+  query,
+  onSnapshot,
+  orderBy,
+  // where,
+} from "firebase/firestore";
 
 export const useCollection = (collectionName, orderName) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
 
   useEffect(() => {
     const q = query(collection(db, collectionName), orderBy(...orderName));
 
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const foods = [];
-      querySnapshot.docs.forEach((doc) => {
-        foods.push({ id: doc.id, ...doc.data() });
+    onSnapshot(q, (querySnapshot) => {
+      console.log(querySnapshot);
+      const recipes = [];
+      querySnapshot.docs.forEach((item) => {
+        recipes.push({ id: item.id, ...item.data() });
       });
-      setData(foods);
+      setData(recipes);
     });
-
-    // Clean up the subscription on unmount
-    return () => unsubscribe();
-  }, [collectionName, orderName]);
+  }, [collectionName]);
 
   return { data };
 };

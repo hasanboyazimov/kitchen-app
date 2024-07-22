@@ -39,9 +39,12 @@ function Navbar() {
       className=" mx-auto z-50 bg-white  navbar px-10 border-b-[1px]  border-b-gray-100 fixed h-[60px] md:h-[80px] lg:h-[80px] xl:h-[80px] 2xl:[80px] border-transparent shadow-custom"
     >
       <div className="flex-1">
-        <a className="btn btn-ghost hover:bg-gray-500 hover:bg-opacity-10 text-xl">
+        <Link
+          to="/"
+          className="btn btn-ghost hover:bg-gray-500 hover:bg-opacity-10 text-xl"
+        >
           Kitchen App
-        </a>
+        </Link>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
@@ -94,10 +97,7 @@ function Navbar() {
             className="btn btn-ghost hover:bg-gray-500 hover:bg-opacity-20 btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              <img
-                alt="User"
-                src={user.photoURL}
-              />
+              <img alt="User" src={user.photoURL} />
             </div>
           </div>
           <ul
@@ -108,7 +108,9 @@ function Navbar() {
               <p className="justify-between">{user.displayName}</p>
             </li>
             <li>
-              <button className="btn btn-secondary" onClick={signOutProfile}>Logout</button>
+              <button className="btn btn-secondary" onClick={signOutProfile}>
+                Logout
+              </button>
             </li>
           </ul>
         </div>

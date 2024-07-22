@@ -1,51 +1,45 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { FormInput } from "../components";
 import { Form, useActionData } from "react-router-dom";
-import { useCollection } from "../hooks/useCollection";
+import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
+import toast from "react-hot-toast";
+import { db } from "../firebase/firebaseConfig";
+// import { collection } from "@firebase/firestore";
 
 // action
 export const action = async ({ request }) => {
   let formData = await request.formData();
   let title = formData.get("title");
   let cookingTime = formData.get("cookingTime");
-  let [ingeridiens, setIngeridiens] = useState([]);
-  let category = useState();
+  let ingeridiens = formData.get("ingeridiens");
+  let category = formData.get("category");
+  let method = formData.get("method");
+  let image = formData.get("image");
 
-  if (!title) {
-    return { error: "Title is required." };
-  }
-  if (!cookingTime) {
-    return { error: "Cooking Time is required." };
-  }
-  if (!category) {
-    return { error: "Category is required." };
-  }
-
-  return { title, cookingTime, ingeridiens, category };
+  return { title, cookingTime, ingeridiens, image, method, category };
 };
 
 function GetRetcipeForm() {
-  const { data } = useCollection("todos", ["createdAt", "desc"]);
   const dataRecipe = useActionData();
 
   useEffect(() => {
     if (dataRecipe && !dataRecipe.error) {
-      const newTodo = {
+      const newRecipe = {
         ...dataRecipe,
         createdAt: serverTimestamp(),
       };
 
-      addDoc(collection(db, "todos"), newTodo)
+      addDoc(collection(db, "foods"), newRecipe)
         .then(() => {
-          toast.success("New Todo Added");
+          toast.success("New Retcipe Added");
         })
         .catch((error) => {
-          toast.error("Failed to add new Todo: " + error.message);
+          toast.error("Failed to add new Recipe: " + error.message);
         });
     } else if (dataRecipe && dataRecipe.error) {
       toast.error(dataRecipe.error);
     }
-  }, [dataRecipe, user.uid]);
+  }, [dataRecipe]);
 
   return (
     <div className="flex w-full justify-center">
@@ -69,10 +63,31 @@ function GetRetcipeForm() {
             label="Ingeridiens"
             type="text"
           />
-          <select className="select select-bordered w-full mt-8">
-            <option className="text-gray-400" disabled selected>
-              Choose the category
-            </option>
+          <FormInput
+            className="mt-0 pt-0"
+            name="image"
+            label="image"
+            type="url"
+          />
+        </div>
+        <div className="w-[450px] flex flex-col">
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text capitalize">Write a mrthod</span>
+            </div>
+            <textarea
+              className="input-bordered w-full border rounded-lg p-4 mb-5 resize-none"
+              name=""
+              id=""
+              placeholder="write a method"
+              rows="5"
+            ></textarea>
+          </label>
+
+          <select
+            defaultValue={"all"}
+            className="select select-bordered w-full mb-4"
+          >
             <option value={"burgers"}>Burgers</option>
             <option value={"sushi"}>Sushi</option>
             <option value={"pizza"}>Pizza</option>
@@ -84,16 +99,7 @@ function GetRetcipeForm() {
             <option value={"japan"}>Japan</option>
             <option value={"coffee"}>Coffee</option>
           </select>
-        </div>
-        <div className="w-[450px] flex flex-col pt-[38px]">
-          <textarea
-            className="border rounded-lg p-4 mb-5"
-            name=""
-            id=""
-            placeholder="write a method"
-            rows="5"
-          ></textarea>
-          <button type="submit" className="btn btn-secondary mt-[74px]">
+          <button type="submit" className="btn btn-secondary mt-4">
             ADD RECIPE
           </button>
         </div>
