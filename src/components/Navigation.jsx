@@ -41,7 +41,7 @@ const Navigation = () => {
             <button className="rounded-xl py-2 px-4 hover:bg-white hover:bg-opacity-50 text-black">
               Coffee
             </button>
-            <button className="rounded-xl py-2 px-4 hover:bg-white hover:bg-opacity-50 text-black">
+            <button className="rounded-xl py-2 px-4 hover:bg-white hover:bg-opacity-50 text-black ">
               <div className="dropdown">
                 <div
                   tabIndex={0}
@@ -66,7 +66,7 @@ const Navigation = () => {
           </div>
         </div>
       </div>
-      <details className="dropdown">
+      <details className="dropdown block lg:hidden">
         <summary className="btn m-1">
           <CiMenuBurger />
         </summary>

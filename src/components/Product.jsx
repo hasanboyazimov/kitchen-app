@@ -3,14 +3,14 @@ import React from "react";
 function Product({ recipe }) {
   console.log(recipe);
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden w-[336px]  mb-10">
-      <div className="relative">
+    <div className="bg-white  overflow-hidden w-[336px] mb-10">
+      <div className="relative shadow-md rounded-[25px] ">
         <img
           src={recipe.image}
           alt={recipe.title}
-          className="w-full h-48 object-cover  hover:bg-white hover:bg-opacity-50 "
+          className="w-full h-48 object-cover rounded-[25px]  hover:bg-white hover:bg-opacity-50 "
         />
-        <div className="absolute bottom-0 right-0 bg-gray-800 bg-opacity-80 text-white text-base px-4 py-2 rounded">
+        <div className="absolute bottom-0 right-0 rounded-br-[25px] rounded-tl-[25px] bg-gray-800 bg-opacity-80 text-white text-base px-4 py-2 ">
           {recipe.cookingTime} <span>min</span>
         </div>
       </div>
