@@ -4,11 +4,11 @@ function Product({ recipe }) {
   console.log(recipe);
   return (
     <div className="bg-white  overflow-hidden w-[336px] mb-10">
-      <div className="relative shadow-md rounded-[25px] ">
+      <div className="relative shadow-md rounded-[25px]">
         <img
           src={recipe.image}
           alt={recipe.title}
-          className="w-full h-48 object-cover rounded-[25px]  hover:bg-white hover:bg-opacity-50 "
+          className="w-full h-48 object-cover hover:opacity-95 transition-all ease-in-out rounded-[25px] "
         />
         <div className="absolute bottom-0 right-0 rounded-br-[25px] rounded-tl-[25px] bg-gray-800 bg-opacity-80 text-white text-base px-4 py-2 ">
           {recipe.cookingTime} <span>min</span>
@@ -20,7 +20,7 @@ function Product({ recipe }) {
           <span className="text-green-500">&#9733;</span>
           <span className="ml-1">{(recipe.rating = "4.5")} Good</span>
         </div>
-        <div className="mt-2 text-gray-600">{(recipe.ingredients)}</div>
+        <div className="mt-2 text-sm text-gray-600">{recipe.ingeridiens}</div>
       </div>
     </div>
   );
