@@ -32,7 +32,7 @@ function Login() {
   return (
     <div className="auth-container">
       <div className="auth-left">
-        <p className="text-7xl text-slate-100 text-center ">Login</p>
+        <p className="text-7xl text-slate-100 text-center "></p>
       </div>
       <div className="auth-right">
         <Form

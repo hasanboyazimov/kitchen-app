@@ -41,7 +41,7 @@ function Register() {
     <div className="auth-container">
       <div className="auth-left">
         <p className="text-7xl text-slate-100 text-center transition">
-          Register
+          
         </p>
       </div>
       <div className="auth-right">
