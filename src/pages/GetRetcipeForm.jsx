@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormInput } from "../components";
 import { Form, useActionData } from "react-router-dom";
 import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
 import toast from "react-hot-toast";
 import { db } from "../firebase/firebaseConfig";
-// import { collection } from "@firebase/firestore";
 
 // action
 export const action = async ({ request }) => {
@@ -21,14 +20,15 @@ export const action = async ({ request }) => {
 
 function GetRetcipeForm() {
   const dataRecipe = useActionData();
+  const formRef = useRef(null);
 
-  // prewiev useSatate
-
+  // preview useState
   const [perTitle, setPerTitle] = useState("");
   const [perCookingTime, setPerCookingTime] = useState(0);
   const [perIngridients, setPerIngridients] = useState("");
   const [perImage, setPerImage] = useState("");
   const [perMethod, setPerMethod] = useState("");
+
   useEffect(() => {
     if (dataRecipe && !dataRecipe.error) {
       const newRecipe = {
@@ -38,7 +38,8 @@ function GetRetcipeForm() {
 
       addDoc(collection(db, "foods"), newRecipe)
         .then(() => {
-          toast.success("New Retcipe Added");
+          toast.success("New Recipe Added");
+          formRef.current.reset(); // Reset the form
         })
         .catch((error) => {
           toast.error("Failed to add new Recipe: " + error.message);
@@ -50,7 +51,7 @@ function GetRetcipeForm() {
 
   return (
     <div className="flex w-full justify-center">
-      <Form method="post" className="flex pt-[90px] gap-5">
+      <Form method="post" className="flex pt-[90px] gap-5" ref={formRef}>
         <div className="flex w-[450px] flex-col">
           <FormInput
             className="mt-0 pt-0"
@@ -84,7 +85,7 @@ function GetRetcipeForm() {
         <div className="w-[450px] flex flex-col">
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text capitalize">Write a mrthod</span>
+              <span className="label-text capitalize">Write a method</span>
             </div>
             <textarea
               className="input-bordered w-full border rounded-lg p-4 mb-5 resize-none"
